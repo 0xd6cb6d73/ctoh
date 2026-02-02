@@ -1,0 +1,43 @@
+{
+  "version": 6,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 20,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "base-windows",
+      "hidden": true,
+      "generator": "Ninja",
+      "installDir": "${sourceDir}/install/${presetName}",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "toolchainFile": "D:/tooling/toolchains/llvm-21-win.cmake",
+      "cacheVariables": {
+          "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+          "LLVM_DIR": "D:/tooling/llvm-mingw-20251219-ucrt-x86_64/lib/cmake"
+      },
+      "condition": {
+          "type": "equals",
+          "lhs": "${hostSystemName}",
+          "rhs": "Windows"
+      }
+    },
+    {
+      "name": "Windows_AMD64_Release",
+      "displayName": "Windows AMD64 Release",
+      "inherits": ["base-windows"], 
+      "cacheVariables": {
+          "CMAKE_BUILD_TYPE": "Release"
+      }
+    },
+    {
+      "name": "Windows_AMD64_Debug",
+      "displayName": "Windows AMD64 Debug",
+      "inherits": ["base-windows"], 
+      "cacheVariables": {
+          "CMAKE_BUILD_TYPE": "Debug"
+      }
+    }
+  ]
+}
