@@ -5,6 +5,8 @@ struct my_str{
     char* buf;
 };
 
+typedef my_str my_str2;
+
 // https://github.com/trustedsec/CS-Situational-Awareness-BOF/blob/master/src/common/base.c
 int bofstart(char* output, int bufsize, int* currentoutsize)
 {   
