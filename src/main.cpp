@@ -207,7 +207,9 @@ int32_t main(int32_t argc, char *argv[]) {
             parse_data->fstr->write(LIT_COMMA.data(), LIT_COMMA.size());
             clang_disposeString(spelling);
           }
-          parse_data->fstr->seekp(-1, std::ios_base::seekdir::end);
+          if (data.args.size() > 0) {
+            parse_data->fstr->seekp(-1, std::ios_base::seekdir::end);
+          }
           parse_data->fstr->write(LIT_PAREN_CLOSE.data(), LIT_PAREN_CLOSE.size());
           parse_data->fstr->write(LIT_SEMI_COLON.data(), LIT_SEMI_COLON.size());
         } else if (cursor_kind == CXCursor_StructDecl) {
