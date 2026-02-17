@@ -7,9 +7,18 @@
     {
         "type": "lldb-dap",
         "request": "launch",
-        "name": "Launch",
+        "name": "simple",
         "program": "${workspaceFolder}/build/Windows_AMD64_Debug/ctoh.exe",
         "args": ["test/simple.c"],
+        "env": [],
+        "cwd": "${workspaceFolder}"
+    },
+    {
+        "type": "lldb-dap",
+        "request": "launch",
+        "name": "typedefs",
+        "program": "${workspaceFolder}/build/Windows_AMD64_Debug/ctoh.exe",
+        "args": ["test/typedefs.c"],
         "env": [],
         "cwd": "${workspaceFolder}"
     },
