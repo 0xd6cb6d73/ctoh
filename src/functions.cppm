@@ -9,15 +9,10 @@ export module ctoh:functions;
 import :shared;
 
 namespace ctoh {
-struct FunctionArg {
-  std::string name;
-  CXType type;
-};
-
 struct Function {
   std::string name;
   CXType ret;
-  std::vector<FunctionArg> args;
+  std::vector<AstElement> args;
 };
 
 export std::unique_ptr<std::fstream> dump_function(CXCursor cursor,

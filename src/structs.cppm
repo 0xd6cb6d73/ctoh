@@ -3,22 +3,11 @@ module;
 #include <clang-c/Index.h>
 #include <fstream>
 #include <string>
-#include <vector>
 
 export module ctoh:structs;
 import :shared;
 
 namespace ctoh {
-struct HeaderType {
-  std::string name;
-  CXType type;
-};
-
-struct HeaderStruct {
-  std::string name;
-  std::vector<HeaderType> types;
-};
-
 size_t is_fn_ptr(const std::string_view spelling) {
   const auto marker = spelling.find("(*");
   if (marker == std::string::npos) {
@@ -29,7 +18,7 @@ size_t is_fn_ptr(const std::string_view spelling) {
 
 export std::unique_ptr<std::fstream> dump_struct(CXCursor cursor,
                                                  std::unique_ptr<std::fstream> fstream) {
-  HeaderStruct data{};
+  WithFields data{};
   CXString struct_name = clang_getCursorSpelling(cursor);
   data.name = std::string(clang_getCString(struct_name));
   clang_disposeString(struct_name);
@@ -37,7 +26,7 @@ export std::unique_ptr<std::fstream> dump_struct(CXCursor cursor,
   clang_visitChildren(
       cursor,
       [](CXCursor current_cursor, CXCursor parent, CXClientData client_data) {
-        HeaderStruct *out = reinterpret_cast<HeaderStruct *>(client_data);
+        auto *out = reinterpret_cast<WithFields *>(client_data);
         CXCursorKind kind = clang_getCursorKind(current_cursor);
         if (kind == CXCursor_FieldDecl) {
           CXString field_name = clang_getCursorSpelling(current_cursor);

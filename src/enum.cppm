@@ -10,10 +10,6 @@ export module ctoh:enums;
 import :shared;
 
 namespace ctoh {
-struct Enums {
-  std::string name;
-  std::vector<AstElement> fields;
-};
 export {
   std::unique_ptr<std::fstream> dump_enum(CXCursor cursor, std::unique_ptr<std::fstream> fstream) {}
 }

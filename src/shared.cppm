@@ -1,7 +1,8 @@
+
 module;
 #include <clang-c/Index.h>
 #include <string>
-
+#include <vector>
 export module ctoh:shared;
 
 export {
@@ -26,5 +27,10 @@ export {
   struct AstElement {
     std::string name;
     CXType type;
+  };
+
+  struct WithFields {
+    std::string name;
+    std::vector<AstElement> types;
   };
 }
