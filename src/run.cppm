@@ -27,6 +27,7 @@ struct ParseData {
     return false;
   }
 };
+
 export void run(const std::string_view file_name) {
   CXIndex index = clang_createIndex(0, 1);
   CXTranslationUnit tu{};
@@ -78,20 +79,15 @@ export void run(const std::string_view file_name) {
         }
 
         if (cursor_kind == CXCursor_FunctionDecl) {
-          parse_data->fstr =
-              std::move(ctoh::dump_function(current_cursor, std::move(parse_data->fstr)));
+          parse_data->fstr = std::move(dump_function(current_cursor, std::move(parse_data->fstr)));
         } else if (cursor_kind == CXCursor_StructDecl) {
-          parse_data->fstr =
-              std::move(ctoh::dump_struct(current_cursor, std::move(parse_data->fstr)));
+          parse_data->fstr = std::move(dump_struct(current_cursor, std::move(parse_data->fstr)));
         } else if (cursor_kind == CXCursor_TypedefDecl) {
-          parse_data->fstr =
-              std::move(ctoh::dump_typedef(current_cursor, std::move(parse_data->fstr)));
+          parse_data->fstr = std::move(dump_typedef(current_cursor, std::move(parse_data->fstr)));
         } else if (cursor_kind == CXCursor_EnumDecl) {
-          parse_data->fstr =
-              std::move(ctoh::dump_enum(current_cursor, std::move(parse_data->fstr)));
+          parse_data->fstr = std::move(dump_enum(current_cursor, std::move(parse_data->fstr)));
         } else if (cursor_kind == CXCursor_UnionDecl) {
-          parse_data->fstr =
-              std::move(ctoh::dump_union(current_cursor, std::move(parse_data->fstr)));
+          parse_data->fstr = std::move(dump_union(current_cursor, std::move(parse_data->fstr)));
         }
         return CXChildVisit_Recurse;
       },
