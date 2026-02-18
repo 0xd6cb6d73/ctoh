@@ -50,13 +50,9 @@ export std::unique_ptr<std::fstream> dump_function(CXCursor cursor,
   fstream->write(data.name.data(), data.name.size());
   fstream->write(LIT_PAREN_OPEN.data(), LIT_PAREN_OPEN.size());
   for (const auto &type : data.args) {
-    CXString spelling = clang_getTypeSpelling(type.type);
-    std::string spelling_str(clang_getCString(spelling));
-    fstream->write(spelling_str.data(), spelling_str.size());
-    fstream->write(LIT_SPACE.data(), LIT_SPACE.size());
-    fstream->write(type.name.data(), type.name.size());
+    std::string spelled_type = handle_named_type(type.type, type.name);
+    fstream->write(spelled_type.data(), spelled_type.size());
     fstream->write(LIT_COMMA.data(), LIT_COMMA.size());
-    clang_disposeString(spelling);
   }
   if (data.args.size() > 0) {
     fstream->seekp(-1, std::ios_base::seekdir::end);

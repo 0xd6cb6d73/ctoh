@@ -41,12 +41,10 @@ export {
     fstream->write(LIT_BRACE_OPEN.data(), LIT_BRACE_OPEN.size());
     fstream->write(LIT_LF.data(), LIT_LF.size());
     for (const auto &type : data.types) {
-      CXString spelling = clang_getTypeSpelling(type.type);
-      std::string spelling_str(clang_getCString(spelling));
       std::string type_spelling = handle_named_type(type.type, type.name);
       fstream->write(type_spelling.data(), type_spelling.size());
+      fstream->write(LIT_SEMI_COLON.data(), LIT_SEMI_COLON.size());
       fstream->write(LIT_LF.data(), LIT_LF.size());
-      clang_disposeString(spelling);
     }
     fstream->write(LIT_BRACE_CLOSE.data(), LIT_BRACE_CLOSE.size());
     fstream->write(LIT_SEMI_COLON.data(), LIT_SEMI_COLON.size());

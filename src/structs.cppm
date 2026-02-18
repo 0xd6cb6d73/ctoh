@@ -8,14 +8,6 @@ export module ctoh:structs;
 import :shared;
 
 namespace ctoh {
-size_t is_fn_ptr(const std::string_view spelling) {
-  const auto marker = spelling.find("(*");
-  if (marker == std::string::npos) {
-    return 0;
-  }
-  return marker + 2;
-}
-
 export std::unique_ptr<std::fstream> dump_struct(CXCursor cursor,
                                                  std::unique_ptr<std::fstream> fstream) {
   WithFields data{};
@@ -47,17 +39,11 @@ export std::unique_ptr<std::fstream> dump_struct(CXCursor cursor,
   fstream->write(LIT_BRACE_OPEN.data(), LIT_BRACE_OPEN.size());
   fstream->write(LIT_LF.data(), LIT_LF.size());
   for (const auto &type : data.types) {
-    CXString spelling = clang_getTypeSpelling(type.type);
-    std::string spelling_str(clang_getCString(spelling));
-    if (const auto idx = ctoh::is_fn_ptr(spelling_str)) {
-      spelling_str.insert(idx, type.name);
-    } else {
-      spelling_str.append(LIT_SPACE).append(type.name);
-    }
-    fstream->write(spelling_str.data(), spelling_str.size());
+    std::string spelled_type = handle_named_type(type.type, type.name);
+    spelled_type.append(LIT_SPACE);
+    fstream->write(spelled_type.data(), spelled_type.size());
     fstream->write(LIT_SEMI_COLON.data(), LIT_SEMI_COLON.size());
     fstream->write(LIT_LF.data(), LIT_LF.size());
-    clang_disposeString(spelling);
   }
   fstream->write(LIT_BRACE_CLOSE.data(), LIT_BRACE_CLOSE.size());
   fstream->write(LIT_SEMI_COLON.data(), LIT_SEMI_COLON.size());

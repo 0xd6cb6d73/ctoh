@@ -1,7 +1,9 @@
 module;
+#include <clang-c/CXString.h>
 #include <clang-c/Index.h>
 #include <string>
 #include <vector>
+
 export module ctoh:shared;
 
 export namespace ctoh {
@@ -41,10 +43,15 @@ struct WithFields {
 std::string handle_named_type(CXType type, std::string name) {
   CXString spelling = clang_getTypeSpelling(type);
   std::string spelling_str(clang_getCString(spelling));
-  const auto marker = spelling_str.find(LIT_BRACKET_OPEN);
-  if (marker == std::string::npos) {
-    return spelling_str.append(LIT_SPACE).append(name).append(LIT_SEMI_COLON);
+  clang_disposeString(spelling);
+  auto marker = spelling_str.find("(*");
+  if (const auto idx = marker; idx != std::string::npos) {
+    return spelling_str.insert(idx + 2, name);
   }
-  return spelling_str.insert(marker, LIT_SPACE).insert(marker + 1, name).append(LIT_SEMI_COLON);
+  marker = spelling_str.find(LIT_BRACKET_OPEN);
+  if (marker == std::string::npos) {
+    return spelling_str.append(LIT_SPACE).append(name);
+  }
+  return spelling_str.insert(marker, LIT_SPACE).insert(marker + 1, name);
 }
 } // namespace ctoh
