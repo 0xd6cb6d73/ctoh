@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.28)
+cmake_minimum_required(VERSION 4.2)
 project(ctoh VERSION 0.1 DESCRIPTION "Clang-based header generation for BOF to BOF-PE conversion" LANGUAGES CXX)
 
 add_executable(${PROJECT_NAME} src/main.cpp)
