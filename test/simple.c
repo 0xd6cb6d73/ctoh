@@ -12,6 +12,11 @@ enum e {
     b = 1,
 };
 
+union u {
+    int ordinal;
+    char name[];
+};
+
 // https://github.com/trustedsec/CS-Situational-Awareness-BOF/blob/master/src/common/base.c
 int bofstart(char* output, int bufsize, int* currentoutsize)
 {   

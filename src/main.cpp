@@ -86,6 +86,9 @@ int32_t main(int32_t argc, char *argv[]) {
         } else if (cursor_kind == CXCursor_EnumDecl) {
           parse_data->fstr =
               std::move(ctoh::dump_enum(current_cursor, std::move(parse_data->fstr)));
+        } else if (cursor_kind == CXCursor_UnionDecl) {
+          parse_data->fstr =
+              std::move(ctoh::dump_union(current_cursor, std::move(parse_data->fstr)));
         }
         return CXChildVisit_Recurse;
       },

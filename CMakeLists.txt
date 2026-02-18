@@ -8,7 +8,7 @@ add_library(ctoh::lib ALIAS ctoh.lib)
 target_sources(ctoh.lib
   PUBLIC
     FILE_SET CXX_MODULES FILES
-      src/enum.cppm src/ctoh.lib.cppm src/shared.cppm src/functions.cppm src/typedefs.cppm src/structs.cppm
+      src/enum.cppm src/ctoh.lib.cppm src/shared.cppm src/functions.cppm src/typedefs.cppm src/structs.cppm src/unions.cppm
 )
 target_compile_features(ctoh.lib PUBLIC cxx_std_23)
 target_link_libraries(ctoh.lib PRIVATE libclang)
