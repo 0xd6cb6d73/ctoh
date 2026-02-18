@@ -7,6 +7,11 @@ struct my_str{
 
 typedef my_str my_str2;
 
+enum e {
+    a,
+    b = 1,
+};
+
 // https://github.com/trustedsec/CS-Situational-Awareness-BOF/blob/master/src/common/base.c
 int bofstart(char* output, int bufsize, int* currentoutsize)
 {   

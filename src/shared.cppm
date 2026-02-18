@@ -23,6 +23,8 @@ export {
   const std::string LIT_EQUAL("=");
   const std::string LIT_USING("using");
   const std::string LIT_TYPEDEF("typedef");
+  const std::string LIT_ENUM("enum");
+  const std::string LIT_UNION("union");
 
   struct AstElement {
     std::string name;
