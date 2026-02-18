@@ -4,3 +4,4 @@ export import :typedefs;
 export import :structs;
 export import :functions;
 export import :unions;
+export import :run;
