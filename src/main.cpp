@@ -1,8 +1,7 @@
 #include <cstdint>
-#include <stdexcept>
-#include <string>
 
 import ctoh;
+import std;
 
 int32_t main(int32_t argc, char *argv[]) {
   if (argc < 2) {

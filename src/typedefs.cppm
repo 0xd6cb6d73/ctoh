@@ -1,12 +1,10 @@
 
 module;
 #include <clang-c/Index.h>
-#include <fstream>
-#include <memory>
-#include <string>
 
 export module ctoh:typedefs;
 import :shared;
+import std;
 
 namespace ctoh {
 

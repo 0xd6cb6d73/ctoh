@@ -1,12 +1,9 @@
 module;
 #include <clang-c/Index.h>
-#include <fstream>
-#include <memory>
-#include <string>
-#include <vector>
 
 export module ctoh:unions;
 import :shared;
+import std;
 
 namespace ctoh {
 

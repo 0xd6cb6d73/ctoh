@@ -5,6 +5,7 @@ project(
     DESCRIPTION "Clang-based header generation for BOF to BOF-PE conversion"
     LANGUAGES CXX
 )
+set(CMAKE_CXX_MODULE_STD 1)
 
 add_executable(ctoh src/main.cpp)
 

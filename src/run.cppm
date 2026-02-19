@@ -1,10 +1,6 @@
 module;
-#include <algorithm>
 #include <clang-c/Index.h>
-#include <format>
-#include <fstream>
-#include <memory>
-#include <string>
+#include <cstdint>
 
 export module ctoh:run;
 import :enums;
@@ -12,6 +8,7 @@ import :functions;
 import :structs;
 import :unions;
 import :typedefs;
+import std;
 
 namespace ctoh {
 struct ParseData {

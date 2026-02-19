@@ -1,11 +1,10 @@
 
 module;
 #include <clang-c/Index.h>
-#include <fstream>
-#include <string>
 
 export module ctoh:structs;
 import :shared;
+import std;
 
 namespace ctoh {
 export std::unique_ptr<std::fstream> dump_struct(CXCursor cursor,

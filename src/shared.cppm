@@ -1,10 +1,9 @@
 module;
 #include <clang-c/CXString.h>
 #include <clang-c/Index.h>
-#include <string>
-#include <vector>
 
 export module ctoh:shared;
+import std;
 
 export namespace ctoh {
 const std::string LIT_STRUCT("struct");

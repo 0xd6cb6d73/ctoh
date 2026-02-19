@@ -1,12 +1,9 @@
 module;
 #include <clang-c/Index.h>
-#include <fstream>
-#include <memory>
-#include <string>
-#include <vector>
 
 export module ctoh:functions;
 import :shared;
+import std;
 
 namespace ctoh {
 struct Function {
