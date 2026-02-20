@@ -25,7 +25,7 @@ struct ParseData {
   }
 };
 
-export void run(std::string file_name) {
+export void run(std::string&& file_name) {
   CXIndex index = clang_createIndex(0, 1);
   CXTranslationUnit tu{};
   CXErrorCode err = clang_parseTranslationUnit2(index, file_name.data(), nullptr, 0, nullptr, 0,
@@ -40,7 +40,7 @@ export void run(std::string file_name) {
   std::string header_name = std::format("{}.h", file_name);
   auto out = std::make_unique<std::fstream>(header_name, std::fstream::out | std::fstream::trunc);
   ParseData parse_data{
-      .in_tu = tu, .fstr = std::move(out), .known = {}, .source = std::string(file_name)};
+      .in_tu = tu, .fstr = std::move(out), .known = {}, .source = std::move(file_name)};
 
   clang_visitChildren(
       cursor,
