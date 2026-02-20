@@ -25,7 +25,7 @@ struct ParseData {
   }
 };
 
-export void run(const std::string_view file_name) {
+export void run(std::string file_name) {
   CXIndex index = clang_createIndex(0, 1);
   CXTranslationUnit tu{};
   CXErrorCode err = clang_parseTranslationUnit2(index, file_name.data(), nullptr, 0, nullptr, 0,
