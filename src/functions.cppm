@@ -56,6 +56,7 @@ std::unique_ptr<std::fstream> dump_function(CXCursor cursor,
   }
   fstream->write(LIT_PAREN_CLOSE.data(), LIT_PAREN_CLOSE.size());
   fstream->write(LIT_SEMI_COLON.data(), LIT_SEMI_COLON.size());
+  fstream->write(LIT_LF.data(), LIT_LF.size());
   return std::move(fstream);
 }
 } // namespace ctoh
