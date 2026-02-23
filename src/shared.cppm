@@ -5,7 +5,7 @@ module;
 export module ctoh:shared;
 import std;
 
-export namespace ctoh {
+namespace ctoh {
 const std::string LIT_STRUCT("struct");
 const std::string LIT_BRACE_OPEN("{");
 const std::string LIT_BRACE_CLOSE("}");

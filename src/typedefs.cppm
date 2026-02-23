@@ -8,8 +8,8 @@ import std;
 
 namespace ctoh {
 
-export std::unique_ptr<std::fstream> dump_typedef(CXCursor cursor,
-                                                  std::unique_ptr<std::fstream> fstream) {
+std::unique_ptr<std::fstream> dump_typedef(CXCursor cursor, std::unique_ptr<std::fstream> fstream) {
+  CXCursor canonical = clang_getCanonicalCursor(cursor);
   CXString spelling = clang_getCursorSpelling(cursor);
   std::string spelling_str(clang_getCString(spelling));
   CXType param_type = clang_getTypedefDeclUnderlyingType(cursor);

@@ -7,8 +7,7 @@ import :shared;
 import std;
 
 namespace ctoh {
-export std::unique_ptr<std::fstream> dump_struct(CXCursor cursor,
-                                                 std::unique_ptr<std::fstream> fstream) {
+std::unique_ptr<std::fstream> dump_struct(CXCursor cursor, std::unique_ptr<std::fstream> fstream) {
   WithFields data{};
   CXString struct_name = clang_getCursorSpelling(cursor);
   data.name = std::string(clang_getCString(struct_name));

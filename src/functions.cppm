@@ -12,8 +12,8 @@ struct Function {
   std::vector<AstElement> args;
 };
 
-export std::unique_ptr<std::fstream> dump_function(CXCursor cursor,
-                                                   std::unique_ptr<std::fstream> fstream) {
+std::unique_ptr<std::fstream> dump_function(CXCursor cursor,
+                                            std::unique_ptr<std::fstream> fstream) {
   CXString fn_name = clang_getCursorSpelling(cursor);
 
   CXCursor args_cursor = clang_Cursor_getArgument(cursor, 0);
