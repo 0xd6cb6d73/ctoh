@@ -108,7 +108,7 @@ jobs:
         # The github tag to download the release from
         tag: v${{ env.CMAKE_VER }}
         # Name of the file to download (use '*' to download all assets other than tarball or zipball)
-        fileName: cmake-${{ env.CMAKE_VER }}-${{ startsWith(matrix.os, 'u') && 'linux' || 'windows' }}-x86_64.${{ startsWith(matrix.os, 'u') && 'tar.gz' || 'zip' }}" # optional, default is 
+        fileName: "cmake-${{ env.CMAKE_VER }}-${{ startsWith(matrix.os, 'u') && 'linux' || 'windows' }}-x86_64.${{ startsWith(matrix.os, 'u') && 'tar.gz' || 'zip' }}" # optional, default is 
         # Download tarball from assets
         tarBall: false # optional, default is false
         # Download zipball from assets
