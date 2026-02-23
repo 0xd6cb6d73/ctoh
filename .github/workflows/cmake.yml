@@ -52,7 +52,7 @@ jobs:
         # The github tag to download the release from
         tag: ${{ env.LLVM_MINGW_TAG }}
         # Name of the file to download (use '*' to download all assets other than tarball or zipball)
-        fileName: "llvm-mingw-${{ env.LLVM_MINGW_TAG }}-ucrt-${{ startsWith(matrix.os, 'u') && 'ubuntu-22.04' || '' }}-x86_64.${{ startsWith(matrix.os, 'u') && 'tar.xz' || 'zip' }}" # optional, default is 
+        fileName: "llvm-mingw-${{ env.LLVM_MINGW_TAG }}-ucrt${{ startsWith(matrix.os, 'u') && '-ubuntu-22.04' || '' }}-x86_64.${{ startsWith(matrix.os, 'u') && 'tar.xz' || 'zip' }}" # optional, default is 
         # Download tarball from assets
         tarBall: false # optional, default is false
         # Download zipball from assets
@@ -75,6 +75,11 @@ jobs:
       shell: bash
       run: |
         echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
+
+    - name: Extract tar archive
+      if: ${{ startsWith(matrix.os, 'u') }}
+      run: |
+        tar xf llvm-mingw-${{ env.LLVM_MINGW_TAG }}-ucrt${{ startsWith(matrix.os, 'u') && '-ubuntu-22.04' || '' }}-x86_64.${{ startsWith(matrix.os, 'u') && 'tar.xz' || 'zip' }}"
 
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
