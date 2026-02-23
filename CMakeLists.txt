@@ -15,6 +15,7 @@ target_sources(
     ctoh.lib
     PUBLIC
         FILE_SET CXX_MODULES
+        BASE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/src"
             FILES
                 src/enum.cppm
                 src/ctoh.lib.cppm
