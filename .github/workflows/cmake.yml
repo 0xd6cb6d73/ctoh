@@ -135,7 +135,8 @@ jobs:
     - name: Extract tar archive
       if: ${{ startsWith(matrix.os, 'u') }}
       run: |
-        tar xf "llvm-mingw-${{ env.LLVM_MINGW_TAG }}-ucrt-ubuntu-22.04-x86_64.tar.xz"
+        cd ${{ github.workspace }}
+        tar xf "${{ github.workspace }}/llvm-mingw-${{ env.LLVM_MINGW_TAG }}-ucrt-ubuntu-22.04-x86_64.tar.xz"
 
     - name: Chmod CMake binary
       if: ${{ startsWith(matrix.os, 'u') }}
