@@ -10,6 +10,7 @@ on:
 
 env:
     LLVM_MINGW_TAG: 20251219 # LLVM 21.1.8
+    NINJA_VER: v1.13.2
 
 jobs:
   build:
@@ -65,6 +66,33 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }} # optional, default is ${{ github.token }}
         # The release id to download the file from
         # releaseId: ${{ env.LLVM_MINGW_TAG }} # optional, default is 
+
+    - name: Get ninja
+      uses: robinraju/release-downloader@daf26c55d821e836577a15f77d86ddc078948b05
+      # uses: robinraju/release-downloader@v1.12
+      with:
+        # The source repository path. Expected format {owner}/{repo}
+        repository: ninja-build/ninja
+        # A flag to choose between latest release and remaining releases
+        latest: false # optional, default is false
+        # A flag to download from prerelease. It should be combined with latest flag
+        preRelease: false # optional, default is false
+        # The github tag to download the release from
+        tag: ${{ env.NINJA_VER }}
+        # Name of the file to download (use '*' to download all assets other than tarball or zipball)
+        fileName: "ninja-${{ startsWith(matrix.os, 'u') && 'linux' || 'win' }}.zip" # optional, default is 
+        # Download tarball from assets
+        tarBall: false # optional, default is false
+        # Download zipball from assets
+        zipBall: false # optional, default is false
+        # Relative path under $GITHUB_WORKSPACE to place the downloaded files
+        out-file-path: . # default is .
+        # If the downloaded assets should be extracted to `out-file-path`. Supports tar, tar.gz and zip
+        extract: true # optional, default is false
+        # Github token to access private repos
+        token: ${{ secrets.GITHUB_TOKEN }} # optional, default is ${{ github.token }}
+        # The release id to download the file from
+        # releaseId: ${{ env.LLVM_MINGW_TAG }} # optional, default is 
             
     
     - uses: actions/checkout@v4
@@ -86,9 +114,12 @@ jobs:
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
       run: >
         cmake -B ${{ steps.strings.outputs.build-output-dir }}
-        -DCMAKE_CXX_COMPILER="llvm-mingw-${{ env.LLVM_MINGW_TAG }}-ucrt-${{ startsWith(matrix.os, 'u') && 'ubuntu-22.04' || '' }}-x86_64/bin/${{ matrix.cpp_compiler }}"
-        -DCMAKE_C_COMPILER="llvm-mingw-${{ env.LLVM_MINGW_TAG }}-ucrt-${{ startsWith(matrix.os, 'u') && 'ubuntu-22.04' || '' }}-x86_64/bin/${{ matrix.c_compiler }}"
+        -DCMAKE_CXX_COMPILER="${{ github.workspace }}/llvm-mingw-${{ env.LLVM_MINGW_TAG }}-ucrt-${{ startsWith(matrix.os, 'u') && 'ubuntu-22.04' || '' }}-x86_64/bin/${{ matrix.cpp_compiler }}"
+        -DCMAKE_C_COMPILER="${{ github.workspace }}/llvm-mingw-${{ env.LLVM_MINGW_TAG }}-ucrt-${{ startsWith(matrix.os, 'u') && 'ubuntu-22.04' || '' }}-x86_64/bin/${{ matrix.c_compiler }}"
         -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+        -DCMAKE_MAKE_TOOL="${{ github.workspace }}/ninja${{ startsWith(matrix.os, 'w') && '.exe' || '' }}"
+        -DLLVM_DIR="${{ github.workspace }}/llvm-mingw-${{ env.LLVM_MINGW_TAG }}-ucrt-${{ startsWith(matrix.os, 'u') && 'ubuntu-22.04' || '' }}-x86_64/lib/cmake"
+        -G Ninja
         -S ${{ github.workspace }}
 
     - name: Build
