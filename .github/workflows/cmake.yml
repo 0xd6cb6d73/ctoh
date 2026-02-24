@@ -136,6 +136,7 @@ jobs:
       if: ${{ startsWith(matrix.os, 'u') }}
       run: |
         cd ${{ github.workspace }}
+        ls -l
         tar xf "${{ github.workspace }}/llvm-mingw-${{ env.LLVM_MINGW_TAG }}-ucrt-ubuntu-22.04-x86_64.tar.xz"
 
     - name: Chmod CMake binary
@@ -147,6 +148,7 @@ jobs:
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
       run: >
+        ls
         ${{ github.workspace }}/cmake-${{ env.CMAKE_VER }}-${{ startsWith(matrix.os, 'u') && 'linux' || 'windows' }}-x86_64/bin/cmake -B ${{ steps.strings.outputs.build-output-dir }}
         -DCMAKE_CXX_COMPILER="${{ github.workspace }}/llvm-mingw-${{ env.LLVM_MINGW_TAG }}-ucrt-${{ startsWith(matrix.os, 'u') && 'ubuntu-22.04' || '' }}-x86_64/bin/${{ matrix.cpp_compiler }}"
         -DCMAKE_C_COMPILER="${{ github.workspace }}/llvm-mingw-${{ env.LLVM_MINGW_TAG }}-ucrt-${{ startsWith(matrix.os, 'u') && 'ubuntu-22.04' || '' }}-x86_64/bin/${{ matrix.c_compiler }}"
