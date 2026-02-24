@@ -134,6 +134,7 @@ jobs:
 
     - name : Move files
       run: |
+        ls
         cp $GITHUB_WORKSPACE/llvm-mingw-${{ env.LLVM_MINGW_TAG }}-ucrt${{ startsWith(matrix.os, 'u') && '-ubuntu-22.04' || '' }}-x86_64.${{ startsWith(matrix.os, 'u') && 'tar.xz' || 'zip' }} ${{ github.workspace }}/
         cp -r $GITHUB_WORKSPACE/cmake-${{ env.CMAKE_VER }}-${{ startsWith(matrix.os, 'u') && 'linux' || 'windows' }}-x86_64 ${{ github.workspace }}/
         cp $GITHUB_WORKSPACE/ninja${{ startsWith(matrix.os, 'u') && '' || '.exe' }} ${{ github.workspace }}/
