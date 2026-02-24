@@ -132,6 +132,12 @@ jobs:
       run: |
         echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
 
+    - name : Move files
+      run: |
+        cp $GITHUB_WORKSPACE/llvm-mingw-${{ env.LLVM_MINGW_TAG }}-ucrt${{ startsWith(matrix.os, 'u') && '-ubuntu-22.04' || '' }}-x86_64.${{ startsWith(matrix.os, 'u') && 'tar.xz' || 'zip' }} ${{ github.workspace }}/
+        cp -r $GITHUB_WORKSPACE/cmake-${{ env.CMAKE_VER }}-${{ startsWith(matrix.os, 'u') && 'linux' || 'windows' }}-x86_64}} ${{ github.workspace }}/
+        cp $GITHUB_WORKSPACE/ninja${{ startsWith(matrix.os, 'u') && '' || '.exe' }} ${{ github.workspace }}/
+
     - name: Extract tar archive
       if: ${{ startsWith(matrix.os, 'u') }}
       run: |
@@ -142,12 +148,12 @@ jobs:
     - name: Chmod CMake binary
       if: ${{ startsWith(matrix.os, 'u') }}
       run: |
-        chmod +x "cmake-${{ env.CMAKE_VER }}-linux-x86_64/bin/cmake"
+        chmod +x "${{ github.workspace }}/cmake-${{ env.CMAKE_VER }}-linux-x86_64/bin/cmake"
 
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
-      run: >
+      run: |
         ls
         ${{ github.workspace }}/cmake-${{ env.CMAKE_VER }}-${{ startsWith(matrix.os, 'u') && 'linux' || 'windows' }}-x86_64/bin/cmake -B ${{ steps.strings.outputs.build-output-dir }}
         -DCMAKE_CXX_COMPILER="${{ github.workspace }}/llvm-mingw-${{ env.LLVM_MINGW_TAG }}-ucrt-${{ startsWith(matrix.os, 'u') && 'ubuntu-22.04' || '' }}-x86_64/bin/${{ matrix.cpp_compiler }}"
